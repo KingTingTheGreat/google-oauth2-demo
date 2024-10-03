@@ -3,10 +3,10 @@
 import { clearCSRFToken, getCSRFToken } from "@/hooks/csrfToken";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
-export default function Callback() {
-  // const [failed, setFailed] = useState(false); // use for displaying errors
+function Callback() {
+  // const [failed, setFailed] = useState(false); // use for displaying errors; not implemented here
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
@@ -57,4 +57,10 @@ export default function Callback() {
       )}
     </div>
   );
+}
+
+export default function CallbackPage() {
+  <Suspense fallback={<div>loading...</div>}>
+    <Callback />
+  </Suspense>;
 }
