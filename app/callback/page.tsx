@@ -43,7 +43,7 @@ function Callback() {
       }
     };
     getSessionId();
-  });
+  }, []);
 
   return (
     <div>
@@ -60,7 +60,9 @@ function Callback() {
 }
 
 export default function CallbackPage() {
-  <Suspense fallback={<div>loading...</div>}>
-    <Callback />
-  </Suspense>;
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <Callback />
+    </Suspense>
+  );
 }
