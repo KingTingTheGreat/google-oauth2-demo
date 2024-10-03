@@ -95,7 +95,11 @@ export async function POST(req: NextRequest) {
     { $set: newUserEntry },
     { upsert: true },
   );
-  if (dbRes.acknowledged && (dbRes.modifiedCount || dbRes.upsertedCount)) {
+  if (
+    dbRes.acknowledged &&
+    dbRes.modifiedCount === 0 &&
+    dbRes.upsertedCount === 0
+  ) {
     console.error(dbRes);
     return NextResponse.json(
       { message: "internal service error, error storing user in db" },
