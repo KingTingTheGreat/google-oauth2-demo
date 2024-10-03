@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const csrfToken = req.nextUrl.searchParams.get("csrfToken");
   if (!csrfToken || csrfToken.length !== CSRF_TOKEN_LENGTH) {
+    console.log("no csrf token");
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -20,6 +21,7 @@ export async function GET(req: NextRequest) {
   });
 
   const redir = `https://accounts.google.com/o/oauth2/auth?${queryParams.toString()}`;
+  console.log(redir);
 
   return NextResponse.redirect(redir);
 }

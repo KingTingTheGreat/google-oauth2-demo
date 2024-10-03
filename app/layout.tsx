@@ -46,7 +46,6 @@ export default function RootLayout({
           <NavLink href="/">Home</NavLink>
           <div>
             <NavLink href="/profile">Profile</NavLink>
-            <NavLink href="/api/google-login">Login</NavLink>
           </div>
         </nav>
         {children}
