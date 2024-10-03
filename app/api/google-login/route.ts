@@ -66,11 +66,13 @@ export async function POST(req: NextRequest) {
 
   console.log("userData", userData);
 
-  if (!name || !email)
+  if (!name || !email) {
+    console.error(userData);
     return NextResponse.json(
-      { message: "internal server error" },
+      { message: "internal server error, user not found from google" },
       { status: 500 },
     );
+  }
 
   const sessionId = generateSessionId();
 
@@ -91,11 +93,13 @@ export async function POST(req: NextRequest) {
     { $set: newUserEntry },
     { upsert: true },
   );
-  if (dbRes.modifiedCount !== 1)
+  if (dbRes.acknowledged && (dbRes.modifiedCount || dbRes.upsertedCount)) {
+    console.error(dbRes);
     return NextResponse.json(
-      { message: "internal service error" },
+      { message: "internal service error, error storing user in db" },
       { status: 500 },
     );
+  }
 
   const res = NextResponse.json({ message: "success" }, { status: 200 });
   res.cookies.set("google-oauth2-demo-sessionid", sessionId, {

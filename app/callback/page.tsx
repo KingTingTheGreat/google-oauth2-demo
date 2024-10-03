@@ -38,7 +38,8 @@ function Callback() {
         }
 
         console.log(data);
-      } catch {
+      } catch (e) {
+        console.error(e);
         router.push("/");
       }
     };
