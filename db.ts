@@ -19,7 +19,7 @@ const connect = async () => {
     client = new MongoClient(MONGO_URI);
     await client.connect();
   }
-  return client.db(DB_NAME);
+  return client.db(DB_NAME + (process.env.ENVIRONMENT || "dev"));
 };
 
 const getCollection = async (collectionName: string) => {
