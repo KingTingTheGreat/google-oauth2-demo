@@ -96,9 +96,8 @@ export async function POST(req: NextRequest) {
     { upsert: true },
   );
   if (
-    dbRes.acknowledged &&
-    dbRes.modifiedCount === 0 &&
-    dbRes.upsertedCount === 0
+    !dbRes.acknowledged ||
+    (dbRes.modifiedCount === 0 && dbRes.upsertedCount === 0)
   ) {
     console.error(dbRes);
     return NextResponse.json(
